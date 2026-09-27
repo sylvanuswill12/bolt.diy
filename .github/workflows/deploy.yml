@@ -29,9 +29,8 @@ jobs:
           NODE_OPTIONS: "--max-old-space-size=8192"
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: 'bolt-diy'
-          directory: 'build/client'
+          command: pages deploy build/client --project-name=bolt-diy
