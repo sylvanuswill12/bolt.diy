@@ -28,8 +28,14 @@ jobs:
         env:
           NODE_OPTIONS: "--max-old-space-size=8192"
 
+      - name: Create Cloudflare Pages Project
+        run: npx wrangler pages project create bolt-diy --production-branch main || true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
       - name: Deploy to Cloudflare Pages
-        run: npx wrangler pages deploy build/client --project-name="bolt-diy" --branch="main" --commit-dirty=true
+        run: npx wrangler pages deploy build/client --project-name=bolt-diy --branch=main
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
